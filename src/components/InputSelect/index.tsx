@@ -93,6 +93,7 @@ export function InputSelect<TItem>({
 
           return items.map((item, index) => {
             const parsedItem = parseItem(item)
+            console.log("parseditem: ", parsedItem)
             return (
               <div
                 key={parsedItem.value}

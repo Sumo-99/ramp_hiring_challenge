@@ -52,7 +52,11 @@ export function App() {
 
         <InputSelect<Employee>
           isLoading={isLoading}
-          defaultValue={EMPTY_EMPLOYEE}
+          defaultValue={{
+            id: "",
+            firstName: "All",
+            lastName: "Employees",
+          }}
           items={employees === null ? [] : [EMPTY_EMPLOYEE, ...employees]}
           label="Filter by employee"
           loadingLabel="Loading employees"
@@ -61,11 +65,13 @@ export function App() {
             label: `${item.firstName} ${item.lastName}`,
           })}
           onChange={async (newValue) => {
-            if (newValue === null) {
-              return
-            }
+            if (newValue === null) return
 
-            await loadTransactionsByEmployee(newValue.id)
+            if (newValue.id === "") {
+              await loadAllTransactions()
+            } else {
+              await loadTransactionsByEmployee(newValue.id)
+            }
           }}
         />
 
